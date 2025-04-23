@@ -23,7 +23,7 @@ line_token = os.getenv('LINE_TOKEN')
 line_secret = os.getenv('LINE_SECRET')
 
 # === 初始化 Firebase ===
-firebase_cred_str = os.getenv("FIREBASE_KEY")
+firebase_cred_str = os.getenv("FIREBASE_KEY") #放在遠端得環境變數中
 firebase_initialized = False
 if firebase_cred_str:
     cred_dict = json.loads(firebase_cred_str)  # 將 JSON 字串轉回 dict
