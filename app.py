@@ -20,7 +20,7 @@ load_dotenv()
 line_token = os.getenv('LINE_TOKEN')
 line_secret = os.getenv('LINE_SECRET')
 
-firebase_key_path = "firebase_key.json"
+firebase_key_path = "/etc/secrets/firebase_key.json"  # Firebase 金鑰檔案的路徑
 firebase_initialized = False
 # === 初始化 Firebase ===
 try:
