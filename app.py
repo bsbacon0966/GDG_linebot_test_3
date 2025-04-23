@@ -12,6 +12,8 @@ from linebot.models import (
     ImageSendMessage)
 from linebot.exceptions import InvalidSignatureError
 import logging
+import json
+from firebase_admin import credentials, initialize_app
 
 # 加載 .env 文件中的變數
 load_dotenv()
@@ -20,22 +22,16 @@ load_dotenv()
 line_token = os.getenv('LINE_TOKEN')
 line_secret = os.getenv('LINE_SECRET')
 
-firebase_key_path = "/etc/secrets/firebase_key.json"  # Firebase 金鑰檔案的路徑
-firebase_initialized = False
 # === 初始化 Firebase ===
-try:
-    if not os.path.exists(firebase_key_path):
-        raise FileNotFoundError(f"找不到 Firebase 金鑰檔案：{firebase_key_path}")
-    cred = credentials.Certificate(firebase_key_path)
-    firebase_admin.initialize_app(cred)
-    db = firestore.client()
+firebase_cred_str = os.getenv("FIREBASE_KEY")
+firebase_initialized = False
+if firebase_cred_str:
+    cred_dict = json.loads(firebase_cred_str)  # 將 JSON 字串轉回 dict
+    cred = credentials.Certificate(cred_dict)
+    initialize_app(cred)
     firebase_initialized = True
-    print("Firebase 初始化成功！")  # 可選：在控制台輸出成功訊息
-except FileNotFoundError as e:
-    print(f"Firebase 初始化失敗 (找不到金鑰檔案): {e}")
-except Exception as e:
-    print(f"Firebase 初始化失敗: {e}")
-
+else:
+    raise ValueError("未設定 FIREBASE_CREDENTIAL_JSON")
 
 
 # 檢查是否設置了環境變數
