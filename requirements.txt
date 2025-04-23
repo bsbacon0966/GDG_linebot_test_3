@@ -16,3 +16,4 @@ accelerate
 openai
 firebase_admin
 google.generativeai
+json
