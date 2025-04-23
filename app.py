@@ -21,6 +21,7 @@ line_token = os.getenv('LINE_TOKEN')
 line_secret = os.getenv('LINE_SECRET')
 
 firebase_key_path = "firebase_key.json"
+firebase_initialized = False
 # === 初始化 Firebase ===
 try:
     if not os.path.exists(firebase_key_path):
