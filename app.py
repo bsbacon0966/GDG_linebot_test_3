@@ -78,7 +78,12 @@ def handle_message(event: Event):
         app.logger.info(f"收到的訊息: {user_message}")
 
         # 使用 GPT 生成回應
-        reply_text = ("你說了：" + user_message)
+        reply_text =""
+        if(firebase_initialized):
+            # 在這裡調用 GPT 生成回應的函數
+            reply_text = F"你說:{user_message}"
+        else:
+            reply_text = "Firebase 初始化失敗，無法處理請求。"
 
         line_bot_api.reply_message(
             event.reply_token,
